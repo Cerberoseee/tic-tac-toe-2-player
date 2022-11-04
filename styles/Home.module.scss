@@ -1,0 +1,23 @@
+.game {
+  display: flex;
+  gap: 20px;
+  padding: 12px;
+  .board {
+    border: 2px solid black;
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    .square {
+      cursor: pointer;
+      border: 1px solid black;
+      width: calc(100% / 3 - 2px);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+
+
