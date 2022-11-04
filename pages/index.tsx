@@ -34,6 +34,7 @@ const Home = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(true);
   const [start, setStart] = useState(false);
+  const [yourTurn, setYourTurn] = useState();
   
   const calculateWinner = (squares: any) => {
     const lines = [
@@ -107,6 +108,10 @@ const Home = () => {
     socket.on('player-disconnect', (msg: any) => {
       alert(msg);
       setStart(false);
+      restartGame();
+    })
+    socket.on('player-turn', (msg: any) => {
+      setYourTurn(msg);
     })
   }
 
@@ -117,7 +122,7 @@ const Home = () => {
         <div>
           <Board onClick={onClick} board={board}/>
           <div className={styles.information}>
-            <div className={styles.turn}>{(turn? 'X': 'O')+ "'s turn"}</div>
+            <div className={styles.turn}>{(yourTurn? 'Your': 'Other\'s ')+ " turn"}</div>
             <div>{calculateWinner(board) ? calculateWinner(board) + " wins!" : null}</div>
             {( calculateWinner(board) || (!board.includes(null)) ) && (
               <button onClick={restartGame}>Restart game</button>

@@ -16,9 +16,14 @@ const SocketHandler = (req, res) => {
       socket.on('player-check', () => {
         socket.emit('start-game', players.length);
         socket.broadcast.emit('start-game', players.length);
+        socket.broadcast.emit('player-turn', true);
+        socket.emit('player-turn', false)
       });
+      socket.broadcast.emit('player-turn', false);
       socket.on('input-change', msg => {
         if (socket.id === players[turn % 2]) {
+          socket.broadcast.emit('player-turn', true);
+          socket.emit('player-turn', false);
           socket.broadcast.emit('update-input', msg);
           socket.emit('update-input', msg);
           turn++;
