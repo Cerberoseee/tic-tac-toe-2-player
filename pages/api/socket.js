@@ -11,12 +11,12 @@ const SocketHandler = (req, res) => {
     res.socket.server.io = io
 
     io.on('connection', socket => {
+      players.push(socket.id);
+      console.log(players);
       socket.on('player-check', () => {
         socket.emit('start-game', players.length);
         socket.broadcast.emit('start-game', players.length);
       });
-      players.push(socket.id);
-      console.log(players);
       socket.on('input-change', msg => {
         if (socket.id === players[turn % 2]) {
           socket.broadcast.emit('update-input', msg);

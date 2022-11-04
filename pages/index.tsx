@@ -119,12 +119,12 @@ const Home = () => {
           <div className={styles.information}>
             <div className={styles.turn}>{(turn? 'X': 'O')+ "'s turn"}</div>
             <div>{calculateWinner(board) ? calculateWinner(board) + " wins!" : null}</div>
-            {calculateWinner(board) && (
+            {( calculateWinner(board) || (!board.includes(null)) ) && (
               <button onClick={restartGame}>Restart game</button>
             )}
           </div>
         </div>
-        
+
         ) : (
           <div>
             <h1>Waiting for players...</h1>
@@ -137,3 +137,6 @@ const Home = () => {
 }
 
 export default Home;
+
+
+
